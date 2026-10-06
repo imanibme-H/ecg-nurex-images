@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1976D2">
+    <title>کارنامه آزمون — ECG-Nurex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-main: #eef2fb;
+            --bg-gradient-1: #dfe7f7;
+            --bg-gradient-2: #f3e8ff;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --card-border: rgba(255, 255, 255, 0.9);
+            --shadow-soft: 0 8px 32px rgba(80, 100, 140, 0.1);
+            --shadow-card: 0 4px 16px rgba(80, 100, 140, 0.08);
+            --text-primary: #1a2330;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --blue: #1976D2;
+            --blue-light: #E3F2FD;
+            --green: #2e7d32;
+            --green-light: #e8f5ee;
+            --red: #c62828;
+            --red-light: #fdecea;
+            --purple: #6d4fd6;
+            --purple-light: #f1ecfb;
+            --orange: #f57c00;
+            --orange-light: #fff4e5;
+        }
+
+        html, body {
+            font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 20%, rgba(103, 126, 234, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 80% 30%, rgba(155, 89, 182, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 50% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 40%),
+                linear-gradient(135deg, #eef2fb 0%, #f3e8ff 50%, #e8f2fc 100%);
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  هدر                                                   */
+        /* ═══════════════════════════════════════════════════════ */
+        .header {
+            text-align: center;
+            padding: 24px 0 20px;
+            animation: fadeDown 0.6s ease-out;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: 2px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .brand-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--blue);
+            box-shadow: 0 0 8px var(--blue);
+            animation: pulse 2s infinite;
+        }
+
+        .header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-top: 12px;
+            background: linear-gradient(135deg, #1a2330 0%, #2d3e5f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  کارت‌های شیشه‌ای                                       */
+        /* ═══════════════════════════════════════════════════════ */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-soft);
+            animation: fadeUp 0.5s ease-out;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  اطلاعات دانشجو                                        */
+        /* ═══════════════════════════════════════════════════════ */
+        .info-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(103, 126, 234, 0.15), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .info-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .info-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 800;
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.35);
+            flex-shrink: 0;
+        }
+
+        .info-name-block {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .info-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .info-username {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.25);
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .info-row .label {
+            color: var(--text-secondary);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        .info-row .value {
+            font-weight: 700;
+            color: var(--text-primary);
+            text-align: left;
+            word-break: break-word;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  حلقه‌ی درصد                                            */
+        /* ═══════════════════════════════════════════════════════ */
+        .percent-card {
+            text-align: center;
+            padding: 30px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .percent-card::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(155, 89, 182, 0.08), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .percent-wrapper {
+            position: relative;
+            display: inline-block;
+            z-index: 1;
+        }
+
+        .percent-ring {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: inset 0 0 20px rgba(80, 100, 140, 0.05);
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .percent-ring svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .percent-ring svg circle {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+        }
+
+        .percent-ring svg .track {
+            stroke: rgba(148, 163, 184, 0.15);
+        }
+
+        .percent-ring svg .progress {
+            transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .percent-inner {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .percent-num {
+            font-size: 52px;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .percent-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  آمار                                                  */
+        /* ═══════════════════════════════════════════════════════ */
+        .stats-card {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 16px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 14px 6px;
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .stat:active {
+            transform: scale(0.95);
+        }
+
+        .stat::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0.15;
+            border-radius: inherit;
+        }
+
+        .stat-correct { background: linear-gradient(135deg, #e8f5ee 0%, #d4edda 100%); }
+        .stat-wrong { background: linear-gradient(135deg, #fdecea 0%, #f8d7da 100%); }
+        .stat-unanswered { background: linear-gradient(135deg, #f1ecfb 0%, #e5dafb 100%); }
+        .stat-score { background: linear-gradient(135deg, #eaf3fd 0%, #d4e5fb 100%); }
+
+        .stat-icon {
+            font-size: 16px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .stat-num {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 2px;
+            line-height: 1.1;
+        }
+
+        .stat-correct .stat-num { color: var(--green); }
+        .stat-wrong .stat-num { color: var(--red); }
+        .stat-unanswered .stat-num { color: var(--purple); }
+        .stat-score .stat-num { color: var(--blue); }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  لیست سوالات                                          */
+        /* ═══════════════════════════════════════════════════════ */
+        .questions-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+
+        .questions-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            flex-shrink: 0;
+        }
+
+        .questions-title {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .questions-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .q-row {
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease;
+        }
+
+        .q-row::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            border-radius: 4px 0 0 4px;
+        }
+
+        .q-row.correct::before { background: var(--green); }
+        .q-row.wrong::before { background: var(--red); }
+        .q-row.unanswered::before { background: var(--text-muted); }
+
+        .q-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .q-num {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .q-num-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 26px;
+            padding: 0 8px;
+            border-radius: 8px;
+            background: rgba(25, 118, 210, 0.1);
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .q-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            white-space: nowrap;
+        }
+
+        .q-status.correct {
+            background: var(--green-light);
+            color: var(--green);
+        }
+
+        .q-status.wrong {
+            background: var(--red-light);
+            color: var(--red);
+        }
+
+        .q-status.unanswered {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-secondary);
+        }
+
+        .q-status-icon {
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .q-image-wrap {
+            background: #fff;
+            border-radius: 14px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.1);
+        }
+
+        .q-image-wrap img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            display: block;
+            margin: 0 auto;
+            transition: transform 0.3s ease;
+        }
+
+        .q-image-wrap img:active {
+            transform: scale(1.02);
+        }
+
+        .q-image-placeholder {
+            color: var(--text-muted);
+            font-size: 12px;
+            padding: 24px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  Loading                                               */
+        /* ═══════════════════════════════════════════════════════ */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            gap: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .spinner {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 3px solid rgba(25, 118, 210, 0.15);
+            border-top-color: var(--blue);
+            animation: spin 0.8s linear infinite;
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  Error                                                 */
+        /* ═══════════════════════════════════════════════════════ */
+        .error-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(254, 202, 202, 0.6);
+            border-radius: 24px;
+            padding: 40px 24px;
+            text-align: center;
+            margin-top: 40px;
+            animation: fadeUp 0.5s ease;
+        }
+
+        .error-icon {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fdecea 0%, #f8d7da 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 32px;
+        }
+
+        .error-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+
+        .error-message {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  Footer                                                */
+        /* ═══════════════════════════════════════════════════════ */
+        .footer {
+            text-align: center;
+            padding: 30px 0 20px;
+            color: var(--text-muted);
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .footer-brand {
+            color: var(--blue);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  Animations                                            */
+        /* ═══════════════════════════════════════════════════════ */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* ═══════════════════════════════════════════════════════ */
+        /*  Responsive                                            */
+        /* ═══════════════════════════════════════════════════════ */
+        @media (max-width: 480px) {
+            .container { padding: 16px 12px 30px; }
+            .header h1 { font-size: 22px; }
+            .stats-card { grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 12px; }
+            .stat { padding: 10px 4px; }
+            .stat-num { font-size: 18px; }
+            .stat-label { font-size: 9px; }
+            .stat-icon { font-size: 12px; }
+            .percent-ring { width: 150px; height: 150px; }
+            .percent-num { font-size: 42px; }
+            .info-avatar { width: 44px; height: 44px; font-size: 18px; }
+            .info-name { font-size: 15px; }
+            .info-row { font-size: 13px; }
+        }
+
+        /* Ripple effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="app">
+        <div class="loading-container">
+            <div class="spinner"></div>
+            <div class="loading-text">در حال بارگذاری کارنامه...</div>
+        </div>
+    </div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════
+        //  تنظیمات — برای هر استاد این خط رو تغییر بده
+        // ═══════════════════════════════════════════════════════════
+        var APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxjzNysklFjX7pq10DbqnKeSpT8eh8yRhR2-xlzQIy5NnrjjY377r1pRS3jd4sKBrQ7/exec";
+
+        var GITHUB_IMAGES = "https://raw.githubusercontent.com/imanibme-H/ecg-nurex-images/main/images/";
+
+        // ═══════════════════════════════════════════════════════════
+        //  شروع
+        // ═══════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', function() {
+            var params = new URLSearchParams(window.location.search);
+            var resultId = params.get('id') || params.get('result');
+
+            if (!resultId) {
+                showError('لینک نامعتبر', 'شناسه‌ی کارنامه در لینک پیدا نشد. لطفاً از لینک ارسالی استاد استفاده کنید.');
+                return;
+            }
+
+            loadResult(resultId);
+        });
+
+        // ═══════════════════════════════════════════════════════════
+        //  بارگذاری داده از Apps Script (JSONP)
+        // ═══════════════════════════════════════════════════════════
+        function loadResult(resultId) {
+            var callbackName = 'ecgCallback_' + Date.now();
+
+            window[callbackName] = function(response) {
+                try { delete window[callbackName]; } catch(e) {}
+                if (script && script.parentNode) {
+                    document.body.removeChild(script);
+                }
+
+                if (!response || response.status !== 'ok') {
+                    var msg = response && response.message ? response.message : 'unknown';
+                    if (msg === 'not_found') {
+                        showError('کارنامه پیدا نشد', 'کارنامه‌ای با این شناسه در سیستم وجود ندارد.');
+                    } else if (msg === 'missing_result_id') {
+                        showError('لینک ناقص', 'شناسه‌ی کارنامه ارسال نشده است.');
+                    } else {
+                        showError('خطا در دریافت داده', 'کد خطا: ' + msg);
+                    }
+                    return;
+                }
+
+                renderResult(response.data);
+            };
+
+            var script = document.createElement('script');
+            script.src = APPS_SCRIPT_URL
+                + '?action=get_result'
+                + '&result_id=' + encodeURIComponent(resultId)
+                + '&callback=' + callbackName;
+
+            script.onerror = function() {
+                try { delete window[callbackName]; } catch(e) {}
+                showError('خطای اتصال', 'اتصال به سرور ممکن نشد. لطفاً اینترنت خود را بررسی کنید.');
+            };
+
+            document.body.appendChild(script);
+
+            // Timeout
+            setTimeout(function() {
+                if (window[callbackName]) {
+                    try { delete window[callbackName]; } catch(e) {}
+                    if (script && script.parentNode) {
+                        document.body.removeChild(script);
+                    }
+                    showError('اتصال کند', 'پاسخ از سرور دریافت نشد. لطفاً دوباره تلاش کنید.');
+                }
+            }, 15000);
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        //  نمایش خطا
+        // ═══════════════════════════════════════════════════════════
+        function showError(title, message) {
+            document.getElementById('app').innerHTML =
+                '<div class="error-card">' +
+                    '<div class="error-icon">⚠️</div>' +
+                    '<div class="error-title">' + escapeHtml(title) + '</div>' +
+                    '<div class="error-message">' + escapeHtml(message) + '</div>' +
+                '</div>' +
+                '<div class="footer"><span class="footer-brand">ECG-Nurex</span></div>';
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        //  رندر کارنامه
+        // ═══════════════════════════════════════════════════════════
+        function renderResult(data) {
+            var total = (data.correct || 0) + (data.wrong || 0) + (data.unanswered || 0);
+            var percent = total > 0 ? Math.round((data.correct / total) * 100) : 0;
+
+            var percentColor = '#c62828';
+            var percentGradient = ['#ef5350', '#c62828'];
+            if (percent >= 80) {
+                percentColor = '#2e7d32';
+                percentGradient = ['#66bb6a', '#2e7d32'];
+            } else if (percent >= 50) {
+                percentColor = '#f57c00';
+                percentGradient = ['#ffa726', '#f57c00'];
+            }
+
+            var fullName = ((data.firstName || '') + ' ' + (data.lastName || '')).trim();
+            if (!fullName) fullName = data.studentName || '—';
+
+            var firstLetter = fullName.trim().charAt(0) || '?';
+
+            // ─── سوالات
+            var answers = [];
+            try { answers = JSON.parse(data.answersJson || '[]'); } catch(e) {}
+
+            var questionsHtml = '';
+            if (answers.length === 0) {
+                questionsHtml = '<div class="q-image-placeholder">اطلاعات سوالات در دسترس نیست</div>';
+            } else {
+                for (var i = 0; i < answers.length; i++) {
+                    var a = answers[i];
+                    var statusClass = '', statusText = '', statusIcon = '';
+
+                    if (a.a === 0) {
+                        statusClass = 'unanswered';
+                        statusText = 'بدون پاسخ';
+                        statusIcon = '—';
+                    } else if (a.a === a.correct) {
+                        statusClass = 'correct';
+                        statusText = 'صحیح';
+                        statusIcon = '✓';
+                    } else {
+                        statusClass = 'wrong';
+                        statusText = 'غلط';
+                        statusIcon = '✕';
+                    }
+
+                    var imageUrl = GITHUB_IMAGES + 'ecg' + a.q + '.png';
+
+                    questionsHtml +=
+                        '<div class="q-row ' + statusClass + '">' +
+                            '<div class="q-header">' +
+                                '<span class="q-num">' +
+                                    '<span class="q-num-badge">' + toPersian(i + 1) + '</span>' +
+                                    'سوال' +
+                                '</span>' +
+                                '<span class="q-status ' + statusClass + '">' +
+                                    '<span class="q-status-icon">' + statusIcon + '</span>' +
+                                    statusText +
+                                '</span>' +
+                            '</div>' +
+                            '<div class="q-image-wrap">' +
+                                '<img src="' + imageUrl + '" ' +
+                                     'alt="ECG سوال ' + toPersian(i + 1) + '" ' +
+                                     'loading="lazy" ' +
+                                     'onerror="imgError(this)">' +
+                            '</div>' +
+                        '</div>';
+                }
+            }
+
+            // ─── حلقه‌ی درصد (SVG Circle)
+            var radius = 82;
+            var circumference = 2 * Math.PI * radius;
+            var offset = circumference - (percent / 100) * circumference;
+
+            var percentSvg =
+                '<svg viewBox="0 0 180 180">' +
+                    '<defs>' +
+                        '<linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">' +
+                            '<stop offset="0%" stop-color="' + percentGradient[0] + '"/>' +
+                            '<stop offset="100%" stop-color="' + percentGradient[1] + '"/>' +
+                        '</linearGradient>' +
+                    '</defs>' +
+                    '<circle class="track" cx="90" cy="90" r="' + radius + '"></circle>' +
+                    '<circle class="progress" ' +
+                            'cx="90" cy="90" r="' + radius + '" ' +
+                            'stroke="url(#grad)" ' +
+                            'stroke-dasharray="' + circumference + '" ' +
+                            'stroke-dashoffset="' + circumference + '" ' +
+                            'data-target-offset="' + offset + '"></circle>' +
+                '</svg>';
+
+            var html =
+                '<div class="header">' +
+                    '<div class="brand-badge">ECG-NUREX</div>' +
+                    '<h1>کارنامه آزمون</h1>' +
+                    '<div class="header-subtitle">' + escapeHtml(data.examTitle || 'آزمون') + '</div>' +
+                '</div>' +
+
+                // ─── اطلاعات دانشجو
+                '<div class="card info-card">' +
+                    '<div class="info-header">' +
+                        '<div class="info-avatar">' + escapeHtml(firstLetter) + '</div>' +
+                        '<div class="info-name-block">' +
+                            '<div class="info-name">' + escapeHtml(fullName) + '</div>' +
+                            '<div class="info-username">@' + escapeHtml(data.username || '') + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="info-row">' +
+                        '<span class="label">عنوان آزمون</span>' +
+                        '<span class="value">' + escapeHtml(data.examTitle || '—') + '</span>' +
+                    '</div>' +
+                    '<div class="info-row">' +
+                        '<span class="label">تاریخ برگزاری</span>' +
+                        '<span class="value">' + escapeHtml(data.examStartDate || '—') + '</span>' +
+                    '</div>' +
+                    '<div class="info-row">' +
+                        '<span class="label">ساعت شروع</span>' +
+                        '<span class="value">' + escapeHtml(data.examStartTime || '—') + '</span>' +
+                    '</div>' +
+                    '<div class="info-row">' +
+                        '<span class="label">تاریخ ارسال</span>' +
+                        '<span class="value">' + escapeHtml(data.finishedAtJalali || '—') + '</span>' +
+                    '</div>' +
+                '</div>' +
+
+                // ─── درصد
+                '<div class="card percent-card">' +
+                    '<div class="percent-wrapper">' +
+                        '<div class="percent-ring">' +
+                            percentSvg +
+                            '<div class="percent-inner">' +
+                                '<div class="percent-num" style="color:' + percentColor + '">' +
+                                    toPersian(percent) +
+                                    '<span style="font-size:0.5em;font-weight:700;opacity:0.7">٪</span>' +
+                                '</div>' +
+                                '<div class="percent-label">درصد صحت</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // ─── آمار
+                '<div class="card stats-card">' +
+                    '<div class="stat stat-correct">' +
+                        '<span class="stat-icon">✓</span>' +
+                        '<div class="stat-num">' + toPersian(data.correct || 0) + '</div>' +
+                        '<div class="stat-label">صحیح</div>' +
+                    '</div>' +
+                    '<div class="stat stat-wrong">' +
+                        '<span class="stat-icon">✕</span>' +
+                        '<div class="stat-num">' + toPersian(data.wrong || 0) + '</div>' +
+                        '<div class="stat-label">غلط</div>' +
+                    '</div>' +
+                    '<div class="stat stat-unanswered">' +
+                        '<span class="stat-icon">—</span>' +
+                        '<div class="stat-num">' + toPersian(data.unanswered || 0) + '</div>' +
+                        '<div class="stat-label">نزده</div>' +
+                    '</div>' +
+                    '<div class="stat stat-score">' +
+                        '<span class="stat-icon">★</span>' +
+                        '<div class="stat-num">' + toPersian(data.score || 0) + '</div>' +
+                        '<div class="stat-label">امتیاز</div>' +
+                    '</div>' +
+                '</div>' +
+
+                // ─── سوالات
+                '<div class="card">' +
+                    '<div class="questions-header">' +
+                        '<div class="questions-icon">📋</div>' +
+                        '<div>' +
+                            '<div class="questions-title">سوالات آزمون</div>' +
+                            '<div class="questions-subtitle">' + toPersian(answers.length) + ' سوال' + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    questionsHtml +
+                '</div>' +
+
+                '<div class="footer">' +
+                    '<span class="footer-brand">ECG-Nurex</span> &copy; ' +
+                    toPersian(new Date().getFullYear()) +
+                '</div>';
+
+            document.getElementById('app').innerHTML = html;
+
+            // ═══════════════════════════════════════════════════════
+            //  انیمیشن حلقه‌ی درصد
+            // ═══════════════════════════════════════════════════════
+            setTimeout(function() {
+                var progress = document.querySelector('.percent-ring .progress');
+                if (progress) {
+                    var target = progress.getAttribute('data-target-offset');
+                    progress.style.strokeDashoffset = target;
+                }
+            }, 100);
+
+            // ═══════════════════════════════════════════════════════
+            //  انیمیشن ورود کارت‌ها به ترتیب
+            // ═══════════════════════════════════════════════════════
+            var cards = document.querySelectorAll('.card');
+            cards.forEach(function(card, index) {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(function() {
+                    card.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + index * 80);
+            });
+        }
+
+        // ═══════════════════════════════════════════════════════════
+        //  Helper ها
+        // ═══════════════════════════════════════════════════════════
+        function toPersian(input) {
+            var persian = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+            var result = '';
+            var str = String(input);
+            for (var i = 0; i < str.length; i++) {
+                var ch = str.charAt(i);
+                var idx = '0123456789'.indexOf(ch);
+                if (idx >= 0) {
+                    result += persian[idx];
+                } else if (ch === '.') {
+                    result += '٫';
+                } else {
+                    result += ch;
+                }
+            }
+            return result;
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function imgError(img) {
+            var parent = img.parentNode;
+            parent.innerHTML =
+                '<div class="q-image-placeholder">' +
+                    '🖼️ تصویر در دسترس نیست' +
+                '</div>';
+        }
+    </script>
+</body>
+</html>
